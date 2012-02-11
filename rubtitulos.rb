@@ -101,7 +101,7 @@ if tempfile.content_type == "application/zip"
   end
   
 
-elsif tempfile.content_type == "application/rar"
+elsif tempfile.content_type == "application/x-rar-compressed"
   puts "es un RAR... y ahora?"
   exit
   # TO-DO: Unrar solo de el/los SRT
