@@ -19,7 +19,11 @@ class Resultado
     self.titulo = div.content.strip    
     detalle = div.next.children.css("div").first.content          
         #children.css("#buscador_detalle_sub").first.content #.content.to_s #split("<br>").first
-        self.detalle = detalle.split("<!--").first.gsub("\n", "")
+        if detalle.split("<!--").first
+          self.detalle = detalle.split("<!--").first.gsub("\n", "")
+        else
+          self.detalle = detalle.gsub("\n", "")
+        end
     self.link = div.next.children.css("#buscador_detalle_sub_datos").first.children.css("a[target=new]")[0]['href']
     downloads = div.next.children.css("#buscador_detalle_sub_datos").first.content
       self.downloads = downloads[11..downloads.index("Cds")-2].to_i
