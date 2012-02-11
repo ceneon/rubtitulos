@@ -1,0 +1,19 @@
+h1. Rubtítulos
+
+Con Rubtítulos podés descargar los subtítulos en español para tus series
+
+h2. Uso
+
+<pre>./rubtitulos.rb Great.Series.S01E05........avi</pre>
+
+Se va a buscar el subtítulo en Subdivx.com, descargarlo, descomprimirlo, y guardarlo junto al video, con el mismo nombre, para que VLC, Perian, u otro reproductor lo cargue automáticamente.
+
+h2. TO-DO
+
+* Si el subtítulo está comprimido como RAR, no se puede continuar. Librería a utilizar???
+* Buscar automáticamente los videos a los que les falta el subtítulo en un directorio dado.
+* Soportar películas
+* Mejorar el criterio de selección de mejor subtítulo según el origen del archivo? (release group, etc)
+
+
+
