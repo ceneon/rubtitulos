@@ -8,7 +8,7 @@ h2. Uso
 
 Se va a buscar el subtítulo en Subdivx.com, descargarlo, descomprimirlo (ZIP o RAR), y guardarlo junto al video, con el mismo nombre, para que VLC, Perian, u otro reproductor lo cargue automáticamente.
 
-Nota: Requiere instalar el comando 'unrar'
+Nota: Requiere instalar el comando "'unrar'":http://www.rarlab.com/download.htm
 
 h2. TO-DO
 
