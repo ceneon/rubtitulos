@@ -56,10 +56,11 @@ while not corte and v[pos] do
   end
   pos+=1
 end
-serie = serie.strip.gsub(" ", "%20")
+serie = serie.strip
 
-busqueda = serie + "%20" + capitulo
 puts "Buscando serie: " + serie + " - episodio: " + capitulo 
+busqueda = serie.gsub(" ", "%20") + "%20" + capitulo
+
 
 doc = Nokogiri::HTML(open('http://subdivx.com/index.php?accion=5&masdesc=&subtitulos=1&realiza_b=1&buscar=' + busqueda))
 
@@ -106,10 +107,29 @@ if tempfile.content_type == "application/zip"
   
 
 elsif tempfile.content_type == "application/x-rar-compressed"
-  puts "es un RAR... y ahora?"
-  exit
-  # TO-DO: Unrar solo de el/los SRT
+
+  # http://mentalized.net/journal/2010/03/08/5_ways_to_run_commands_from_ruby/
+  `mkdir /tmp/rubtitulos >& /dev/null; rm /tmp/rubtitulos/*`
+  #system("unrar l #{tempfile.path}")
   
+  # x : extract
+  # -n*.srt : filtra por SRT
+  # -tsm- : actualiza fecha de modificación a la fecha actual
+  # -y : Contesta que sí a toda preegunta
+  ## con system(  ) , devuelve true/false
+  `cd /tmp/rubtitulos ; unrar x -y -n*.srt -tsm- #{tempfile.path}`
+  
+  directorio_original = Dir.getwd
+  Dir.chdir("/tmp/rubtitulos")
+  lista = Dir.glob("*.srt")
+  srt.write File.open(lista.first).read
+  Dir.chdir(directorio_original)
+  #puts lista.to_s
+  
+  #else
+  #  puts "Problemas ejecutando el comando unrar. Está instalado? Descargar versión 'command line only' en: http://www.rarlab.com/download.htm" 
+  #  exit
+  #end
   
 else
   puts "ERROR: Tipo de archivo desconocido"
