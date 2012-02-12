@@ -85,9 +85,7 @@ if resultados.empty?
 end
   
 puts "Descargando el más popular (" + resultados.first.downloads.to_s + " downloads)..."
-
-puts resultados.first.link
-
+#puts resultados.first.link
 
 tempfile = open(resultados.first.link)
 srt = Tempfile.new("rubtitulo")
@@ -109,7 +107,7 @@ if tempfile.content_type == "application/zip"
 elsif tempfile.content_type == "application/x-rar-compressed"
 
   # http://mentalized.net/journal/2010/03/08/5_ways_to_run_commands_from_ruby/
-  `mkdir /tmp/rubtitulos >& /dev/null; rm /tmp/rubtitulos/*`
+  `mkdir /tmp/rubtitulos >& /dev/null; rm /tmp/rubtitulos/* >&`
   #system("unrar l #{tempfile.path}")
   
   # x : extract
