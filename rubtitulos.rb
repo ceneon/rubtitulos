@@ -107,7 +107,7 @@ if tempfile.content_type == "application/zip"
 elsif tempfile.content_type == "application/x-rar-compressed"
 
   # http://mentalized.net/journal/2010/03/08/5_ways_to_run_commands_from_ruby/
-  `mkdir /tmp/rubtitulos >& /dev/null; rm /tmp/rubtitulos/* >&`
+  `mkdir /tmp/rubtitulos >& /dev/null; rm /tmp/rubtitulos/* >& /dev/null`
   #system("unrar l #{tempfile.path}")
   
   # x : extract
