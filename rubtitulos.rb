@@ -142,7 +142,7 @@ if srt.read.empty? then
 end
 
 # Renombrar el .srt al mismo nombre del avi   
-f = File.new( avi.gsub(".mp4",".avi").gsub(".avi", ".srt") , "wb")
+f = File.new( avi.gsub(".mp4",".avi").gsub(".avi", ".srt").gsub(".mkv", ".srt") , "wb")
 srt.rewind
 f.write( srt.read )
 srt.close
