@@ -14,7 +14,7 @@ if ARGV.empty?
 end
 
 class Resultado
-  attr_accessor :titulo, :detalle, :link, :downloads
+  attr_accessor :titulo, :detalle, :link_web_detalle, :downloads
   
   def parsear_subdivx!(div)
     self.titulo = div.content.strip    
@@ -25,7 +25,8 @@ class Resultado
         else
           self.detalle = detalle.gsub("\n", "")
         end
-    self.link = div.next.children.css("#buscador_detalle_sub_datos").first.children.css("a[target=new]")[0]['href']
+    self.link_web_detalle = div.children.css("div a.titulo_menu_izq")[0]['href']
+    #self.link = div.next.children.css("#buscador_detalle_sub_datos").first.children.css("a[target=new]")[0]['href']
     downloads = div.next.children.css("#buscador_detalle_sub_datos").first.content
       self.downloads = downloads[11..downloads.index("Cds")-2].to_i
   end
@@ -85,14 +86,17 @@ if resultados.empty?
   exit
 end
   
-puts "Descargando el más popular (" + resultados.first.downloads.to_s + " downloads)..."
-#puts resultados.first.link
+puts "Buscando la URL del más popular (" + resultados.first.downloads.to_s + " downloads)..."
 
-tempfile = open(resultados.first.link)
+doc2 = Nokogiri::HTML(open(resultados.first.link_web_detalle))
+link_final = ((doc2.css("#detalle_datos").css("#detalle_datos_derecha")[1]).css(".detalle_link")[1])['href']
+
+puts "Descargando subtítulo..."
+tempfile = open(link_final)
 srt = Tempfile.new("rubtitulo")
 
 if tempfile.content_type == "application/zip"
-  
+  puts "Descomprimiendo ZIP..."
   Zip::Archive.open( tempfile.path )  do |zf|
     # this is a single file archive, so read the first file
     zf.each do |f| 
@@ -104,9 +108,10 @@ if tempfile.content_type == "application/zip"
     end
   end
   
-
 elsif tempfile.content_type == "application/x-rar-compressed"
 
+  puts "Descomprimiendo RAR..."
+  
   # http://mentalized.net/journal/2010/03/08/5_ways_to_run_commands_from_ruby/
   `mkdir /tmp/rubtitulos >& /dev/null; rm /tmp/rubtitulos/* >& /dev/null`
   #system("unrar l #{tempfile.path}")
