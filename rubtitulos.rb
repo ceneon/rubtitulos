@@ -40,7 +40,7 @@ end
 
 avi = ARGV[0]
 
-v = avi.split(".")
+v = avi.split("/").last.split(".")
 v.each{ |x| x = x.split(" ")}
 v.flatten!
 
