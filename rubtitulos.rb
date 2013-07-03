@@ -89,7 +89,7 @@ end
 puts "Buscando la URL del más popular (" + resultados.first.downloads.to_s + " downloads)..."
 
 doc2 = Nokogiri::HTML(open(resultados.first.link_web_detalle))
-link_final = ((doc2.css("#detalle_datos").css("#detalle_datos_derecha")[1]).css(".detalle_link")[1])['href']
+link_final = (doc2.css("#detalle_datos").css("center h1 a").first)['href']
 
 puts "Descargando subtítulo..."
 tempfile = open(link_final)
